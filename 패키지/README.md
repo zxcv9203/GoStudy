@@ -34,13 +34,13 @@ Go에서 사용하는 표준 패키지는 [https://golang.org/pkg](https://golan
 package main
 
 func main() {
-	fmt.Println("Hello")
+  fmt.Println("Hello")
 }
 ```
 
 위의 코드와 같이 해당 패키지를 선언하지 않고 사용하려고 할 경우 패키지를 찾지 못해 에러가 발생합니다.
 
-![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/ea56414c-9d16-4e5a-a769-18e7bf7bf0ac/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210827%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210827T073018Z&X-Amz-Expires=86400&X-Amz-Signature=58dc4030ebb2f71d28b1e330133dcf250231f66d7f035daca1659f445a39c33d&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/ea56414c-9d16-4e5a-a769-18e7bf7bf0ac/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210827%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210827T124032Z&X-Amz-Expires=86400&X-Amz-Signature=7230e9c5ee56f176f0d9a2b362992ab1ec31ee0c0eae950c5921f46a850e7ce5&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 해당 에러는 다음과 같이 패키지를 임포트 시켜주면 해결되는 것을 볼 수 있습니다.
 
@@ -54,7 +54,7 @@ func main() {
 }
 ```
 
-![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f56f57ed-8b3a-4dab-b21c-73a80078f9e0/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210827%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210827T073047Z&X-Amz-Expires=86400&X-Amz-Signature=50b09a403059a73b03379a040208f377d56806b0b1648372a996b2396eccb536&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f56f57ed-8b3a-4dab-b21c-73a80078f9e0/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210827%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210827T124053Z&X-Amz-Expires=86400&X-Amz-Signature=d857787177083e792aabbe715d4fc337be658ebf336abe6c80510ae761b20e28&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 > 패키지 Import 경로
 
@@ -67,7 +67,7 @@ ex ) GOPATH = /home/go
 
 같은 폴더에는 서로 다른 패키지가 존재할 수 없으므로 다음 그림과 같은 형태로 만들어 보겠습니다.
 
-![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4ddc5f5c-9e2a-40d2-9f0b-abba165fd363/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210827%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210827T073109Z&X-Amz-Expires=86400&X-Amz-Signature=f0d9e016bdf748c9c2edaacaf841a96d1246c721dd12713f27a3eb6a11ba788d&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4ddc5f5c-9e2a-40d2-9f0b-abba165fd363/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210827%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210827T124112Z&X-Amz-Expires=86400&X-Amz-Signature=a6bf38bc4200bbb3e6ab937311c902b17de37dfd4b9bdd62c8f655f2cd8e4ee9&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 - path.go
 
@@ -95,7 +95,7 @@ ex ) GOPATH = /home/go
 
 위의 코드의 `main.go`를 실행시키면 잘 되야 할 것 같지만 실제로는 다음과 같은 에러 메시지를 출력합니다.
 
-![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c3f7d855-ef83-401e-9ef3-209274143a8c/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210827%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210827T073128Z&X-Amz-Expires=86400&X-Amz-Signature=8f3f64ff7cc4424b3b3a49f8f9afd59b1d9e427a442797857b38464ce3d53890&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c3f7d855-ef83-401e-9ef3-209274143a8c/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210827%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210827T124130Z&X-Amz-Expires=86400&X-Amz-Signature=dc6e67cb4f1c17dc6ec3a71d916a7638ea09057589a839c770878ab569e4e8ad&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 외부로 노출시키지 않은 이름은 참조할 수 없다고 나옵니다. 해당 문제는 간단하게 해결할 수 있습니다.
 
@@ -135,12 +135,170 @@ ex ) GOPATH = /home/go
 
 실행 시켜보면 다음과 같이 잘 실행되는 것을 볼 수 있습니다.
 
-![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/b020cedf-0e1e-4771-9e1b-8a75daca8e6e/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210827%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210827T073152Z&X-Amz-Expires=86400&X-Amz-Signature=b9fea2d8043cfdcfdd767c93b4824a02a9c69cf9be1c931e3a9b6eb904871def&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/b020cedf-0e1e-4771-9e1b-8a75daca8e6e/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210827%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210827T124153Z&X-Amz-Expires=86400&X-Amz-Signature=f39a908cedd34c9dc5aa83a8770883adc3d35d726a5a4706f3b3db53924a086f&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
----
+> init 함수
 
-추가하면 좋을거 같은것
+개발자가 패키지를 작성할 때 패키지 실행 시 처음으로 호출되는 init() 함수를 작성할 수 있습니다.
 
-go get (패키지 불러오기)
+init() 함수 같은 경우 패키지가 로드되면서 실행되는 함수로 별도의 호출 없이 자동으로 호출됩니다.
 
-init 함수, alias
+다음은 init() 함수 예제입니다.
+
+```go
+package main
+
+import "fmt"
+
+var n int
+
+func init() {
+	n = 10
+}
+
+func main() {
+	fmt.Println(n)
+}
+```
+
+위의 코드를 실행 시켜보면 init 함수를 호출하지 않았음에도 n의 값이 10으로 변경되는 것을 알 수 있습니다.
+
+이처럼 `init()` 을 사용하면 따로 호출하지 않아도 제일 먼저 실행됩니다.
+
+그럼 여러 패키지에서 `init()` 을 사용할 때 순서는 어떻게 진행될까요?
+
+Go 프로그램은 항상 main() 함수로 시작이됩니다. 만약 main 패키지가 다른 패키지를 임포트하고 있으면, 임포트된 각각의 패키지를 먼저 불러옵니다.
+
+임포트된 패키지에서 또 다른 패키지를 임포트하고 있으면 패키지를 불러옵니다.
+
+임포트 되는 모든 패키지를 불러온 후에 main() 함수가 실행됩니다.
+
+간단한 예제를 통해 직접 확인해 보겠습니다.
+
+다음과 같은 구조와 코드를 가진 프로젝트가 있다고 가정해봅시다.
+
+![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/be2407e7-e3ce-48df-9009-822a177153b7/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210827%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210827T124214Z&X-Amz-Expires=86400&X-Amz-Signature=bb725fe654399377fe0b41bc7d4846132ce5c2d6a717f9c3c1c6f61657457ade&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+
+- pack1.go
+
+    ```go
+    package pack1
+
+    import (
+    	"fmt"
+    )
+
+    func init() {
+    	fmt.Println("pack1 init")
+    }
+    func Call() {
+    	fmt.Println("pack1 called")
+    }
+    ```
+
+- pack2.go
+
+    ```go
+    package pack2
+
+    import (
+    	"fmt"
+    	"github.com/pack1"
+    )
+
+    func init() {
+    	fmt.Println("pack2 init")
+    }
+    func Call() {
+    	fmt.Println("pack2 called")
+    	pack1.Call()
+    }
+    ```
+
+- pack3.go
+
+    ```go
+    package pack3
+
+    import (
+    	"fmt"
+    	"github.com/pack2"
+    )
+
+    func init() {
+    	fmt.Println("pack3 init")
+    }
+    func Call() {
+    	fmt.Println("pack3 called")
+    	pack2.Call()
+    }
+    ```
+
+- main.go
+
+    ```go
+    package main
+
+    import (
+    	"fmt"
+    	"github.com/pack3"
+    )
+    func init() {
+    	fmt.Println("main.go init")
+    }
+    func main() {
+    	fmt.Println("main.go main start")
+    	pack3.Call()
+    }
+    ```
+
+위의 main.go를 실행시켜보면 다음과 같은 결과가 나옵니다.
+
+![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/bb26ad81-3500-4fa2-9a6d-5954a8fc6318/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210827%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210827T124243Z&X-Amz-Expires=86400&X-Amz-Signature=caa256d6d54e1de36ffe8c96c8309d9184d9fd5d5de860cbf0efa1108ead03e2&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+
+위의 순서를 init 순서를 그림으로 표현하면 다음과 같습니다.
+
+![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/127553c0-6426-4488-953d-46ad6dad8292/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210827%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210827T124320Z&X-Amz-Expires=86400&X-Amz-Signature=18d4a63277fbc8b2a09151b23d975d3915e02798961e98b41a46807c32250763&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+
+1. main.go를 실행시키면 임포트된 패키지(pack3)를 먼저 가져옵니다.
+2. pack3.go는 임포트된 패키지 pack2를 가져옵니다.
+3. pack2.go는 임포트된 패키지 pack1을 가져옵니다.
+4. pack1.go는 init() 함수를 실행합니다.
+5. pack2.go는 init() 함수를 실행합니다.
+6. pack3.go는 init() 함수를 실행합니다.
+7. main.go는 init()함수를 실행합니다.
+8. main.go에서 main 함수를 시작합니다.
+
+위에서는 패키지를 사용하지 않아 Call 함수를 만들어 사용하도록 했는데 임포트한 패키지를 사용하지 않고 init만 쓰고 싶을 때는 `alias` 를 이용하면 됩니다.
+
+> 패키지 alias
+
+패키지를 불러올때 안의 내용은 사용하지 않고 init 함수만 호출하는 방법은 없을까요?
+
+이럴 때는 언더바(`_`)를 사용해서 `init()` 만 호출할 수 있습니다.
+
+```go
+import (
+	_ "github.com/pack3"
+)
+
+func main() {
+	
+}
+```
+
+원래는 패키지를 사용하면 에러가 발생했지만 에러가 발생하지 않고 `init()` 을 잘 호출하는 것을 볼 수 있습니다.
+
+또한 패키지 alias는 패키지 이름이 동일할때 alias를 이용해서 별칭을 지어 중복을 피해줄 수 있습니다.
+
+```go
+// 예시를 들기 위한 코드입니다.
+import (
+	mongo "database/mongo/db"
+	mysql "database/mysql/db"
+)
+func main() {
+	mongo.conn()
+	mysql.conn()
+}
+```

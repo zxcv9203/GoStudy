@@ -1,6 +1,6 @@
 package main
 
-import "github.com/pack"
+import "github.com/GoStudy/패키지/pack"
 
 func main() {
 	pack.hello()
