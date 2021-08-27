@@ -29,7 +29,7 @@ import "fmt"
   예를들어, `bufio` 패키지에 있는 버퍼 리더는 `BufReader`가 아닌 `Reader`로 불립니다. 왜냐하면 사용자는 `bufio.Reader`로 보게 되며, 이것이 `bufio.BufReader`보다 더 명확하고 간결하기 때문입니다. 게다가 임포트된 객체들은 항상 패키지명과 같이 사용되기 때문에 `bufio.Reader`는 `io.Reader`와 충돌하지 않습니다. Go에 존재하는 `ring.Ring` 이라는 구조체의 인스턴스를 만드는 함수는 보통은 `NewRing`으로 불릴테지만 `Ring`은 패키지 밖으로 노출된 유일한 타입이며 패키지가 ring으로 불리기 때문에 이 함수는 그냥 `New`라고 부르고 `ring.New`와 같이 사용합니다.
   좋은 이름을 사용하기 위해서 이러한 패키지 구조를 사용하는 것이 중요합니다.
 
-> 게터 (Getters)
+> 게터 (Getters) 규칙
 
 Go는 `Getters`와 `Setters`를 자체적으로 제공하지 않습니다.
 
@@ -48,7 +48,7 @@ if owner != user {
 }
 ```
 
-> 인터페이스 명
+> 인터페이스 명 규칙
 
 관례적으로, 하나의 메서드를 갖는 인터페이스는 메서드 이름에 `-er` 접미사를 붙이거나 에이전트 명사를 구성하는 유사한 변형에의해 지정된다. 예를 들면, `Reader` `Writer` `Formatter` `CloseNotifier` 등이 있습니다.
 
