@@ -1,8 +1,8 @@
 package main
 
 import (
-"fmt"
-"time"
+	"fmt"
+	"time"
 )
 
 func readWord(ch chan string) {
