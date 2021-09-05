@@ -1,6 +1,4 @@
-# 데이터
-
-## 배열
+# 배열
 
 일반적인 프로그래밍 언어의 배열에 해당한다. 
 
@@ -78,7 +76,7 @@ func byte_zero_two(ptr *[32]byte) {
 
 때문에 Go에서는 단순히 배열을 사용하기 보다는 슬라이스라는 데이터 타입을 더 자주 활용하는 편이다.
 
-## 슬라이스
+# Slice
 
 슬라이스를 간단하게 표현하자면 배열의 일부분이라고 할 수 있다. 배열과 마찬가지로 인덱싱이 가능하며 길이가 존재한다. 배열과 달리 길이를 변경할 수 있다는 점이 특징이다.
 
@@ -228,7 +226,7 @@ s = append(s, 1, 2)		// 1과 2를 추가
 s = append(s, s...) 	// s에 s를 한번더 추가
 ```
 
-## Map
+# Map
 
 키값과 대응하는 값으로 이루어진 Map은 해시 테이블로부터 비롯된 자료 구조이다. Go에서는 Map을 기본 자료형으로 제공하고 있으며, 다음과 같이 정의한다.
 
@@ -304,7 +302,7 @@ for name, age := range ages{
 *************/
 ```
 
-## struct
+# struct
 
 go에는 동일하거나 다른 유형의 필드가 포함된 구조체 유형이 존재한다.  구조체는 기본적으로 논리적 의미 또는 구성을 갖는 명명된 필드의 모음이며, 각 필드에는 특정 유형이 있다.
 
@@ -558,7 +556,7 @@ w = Wheel{
 		Spokes: 20,
 	}
 	
-	w.X = 20 // w.Cir
+	w.X = 20 // w.Cir.Point.X 와 동일한 표현
 ```
 주의해야 할 점은, 익명 필드의 경우 한 구조체 내에 동일한 타입이 두번 이상 등장할 수 없다는 것이다. 익명 필드는 타입을 기준으로 인식이 되기 때문에, 서로 다른 필드의 타입 중복은 모호할 수 밖에 없기 때문이다.
 
@@ -570,3 +568,133 @@ type Wheel struct {
 }
 ```
 [실행 링크](https://play.golang.org/p/NgGZb8BSr8D)
+
+
+# JSON
+----
+
+Go언어에서 struct는 JSON과 긴밀한 연관을 갖는다. Go의 `encoding/json` 이라는 모듈을 통해 구조체 형식에서 JSON 형식으로의 [마셜링](https://ko.wikipedia.org/wiki/%EB%A7%88%EC%83%AC%EB%A7%81_(%EC%BB%B4%ED%93%A8%ED%84%B0_%EA%B3%BC%ED%95%99))과 반대로 JSON 파일을 알맞게 정의된 구조체 타입으로 변환해주는 디마셜링을 지원한다.
+
+## 마셜링
+
+구조체의 형식을 JSON 형태로 변환하는 과정이다.
+
+기존의 struct 정의 부분과 약간의 차이가 존재하고 `Marshal` 이라고 하는 메서드를 사용한다.
+
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+)
+
+type Book struct {
+	Title string 	`json:"title"`		// 주의: 작은 따옴표가 아니라 back-tip(`) 이다
+	Author string  	`json:"author"`		
+}
+
+func main() {
+	book := Book{Title: "Learning Concurrency in golang", Author: "Youngmki"}	// 구조체 초기화
+	
+	// %#v 해당하는 값을 생성하는 소스 코드 스니펫
+	fmt.Printf("%#v\n\n", book)
+	
+	byteArray, err := json.Marshal(book)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(string(byteArray))
+} 
+```
+Output
+
+```
+main.Book{Title:"Learning Concurrency in Python", Author:"Elliot Forbes"}
+
+{"title":"Learning Concurrency in Python","author":"Elliot Forbes"}
+```
+
+마셜링 이전과 이후의 차이에 주목하자. struct 형태로 존재하던 값이 JSON 파일에서 읽을 수 있도록 변환되었다.
+
+마셜링을 진행할 때, 좀 더 우리에게 친숙한 JSON 형식으로 변환하기 위해서는 `MarshalIndent` 함수를 사용한다.
+
+> 참고로, MarshalIndent의 두번째 인수는 매 줄마다 prefix할 값("")이 들어가고, 세번째 인수에는 각 사이를 구분해줄 값("	")이 들어간다.
+
+```go
+	byteArray, err := json.MarshalIndent(book, "", "	")
+```
+
+으로 변환해주었고, 결과는 다음과 같다.
+
+Output
+```
+main.Book{Title:"Learning Concurrency in Python", Author:"Elliot Forbes"}
+
+{
+	"title": "Learning Concurrency in Python",
+	"author": "Elliot Forbes"
+}
+```
+
+메서드의 반환값으로는, 1) JSON 호환 string 데이터와 2) err 값이 있다.
+[실행 링크](https://play.golang.org/p/ZASjJNMOyDP)
+
+## Un-마셜링
+
+이번엔 JSON에서 호환가능한 형식에서 구조체 형태로의 언마셜링을 진행하려고 한다.
+
+원리는 간단하다. JSON 형식의 데이터를 `Unmarshal` 메서드를 활용해서, 해당 메서드의 두번째 인자에 넣어준다.
+
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"reflect"
+)
+
+type SensorReading struct {
+	Name        string `json:"name"`
+	Capacity    int    `json:"capacity"`
+	Time        string `json:"time"`
+	Information Info   `json:"info"`
+}
+
+type Info struct {
+	Description string `json:"desc"`
+}
+
+func main() {
+	jsonString := `{
+		"name":"battery sensor", 
+		"capacity":40, 
+		"time":"2021-09-05", 
+		"info": {
+			"desc": "a sensor reading"
+		}
+	}`
+	fmt.Println(reflect.TypeOf("Type of jsonString" + jsonString))
+
+	var reading SensorReading
+	err := json.Unmarshal([]byte(jsonString), &reading)
+	if err != nil {
+		fmt.Println(err)
+	}
+	// %+v, 값이 구조체인 경우 구조체의 필드명까지 포함
+	fmt.Printf("%+v\n", reading)	
+}
+```
+
+코드를 차근차근 살펴보자면, 먼저 메인함수에서 json 파일을 읽는 대신, 그와 동일한 역할을 해줄 string 형식의 값(`jsonString`)을 생성했다.
+
+그 아래 `SensorReading` 타입으로 변수 `reading`을 생성한다. 
+
+해당 타입은 내가 생성한 구조체로 Info라는 구조체와 중첩되어 있다.
+
+이때, 받고자 하는 JSON 파일의 구조(여기서는 변수 jsonString)와 정의한 구조체의 정의가 동일하다는 점에 주목하자. 
+
+`SeonsorReading` 타입의 `reading`이라는 변수에는 `Unmarshal` 함수를 통해 `JSON 형식`에서 앞서 정의한 `SensorReading` 구조체 형식으로의 변환된 값이 저장된다.
+
+[실행 링크](https://play.golang.org/p/HvljExEP_Vg)
