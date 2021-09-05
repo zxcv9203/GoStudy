@@ -90,7 +90,6 @@ slice3 := make([]int, 2)
 copy(slice3, slice2)
 fmtPrintln(slice1, slice2)
 ```
-
 가장 기본적인 슬라이스의 사용방법이다. 
 
 프로그램을 실행하면 "0, 1, 2, 3" 값의 slice1과 "0, 1, 2, 3, 4, 5"의 값을 가진 slice2가 있다. 
@@ -137,6 +136,38 @@ channel, slice, map은 go의 데이터 타입 중에서 동시에 여러 값을 
   - channel
   - slice
   - map
+
+
+## slice는 배열에 대한 참조다.
+
+```go
+	d := []string{"r", "o", "a", "d"}
+	e := d[2:]
+	fmt.Println(e)
+	// e == []string{'a', 'd'}
+	e[1] = "m"
+	// e == []string{'a', 'm'}
+	fmt.Println(e)
+	// d == []string{'r', 'o', 'a', 'm'}
+	fmt.Println(d)
+
+	/********
+	Output
+	---------
+	[a d]
+	[a m]
+	[r o a m]
+	*********/
+```
+
+해당 코드를 보면, 기존의 배열에서 잘라온 슬라이스를 값을 변경했을 때 기존의 배열이 어떻게 변하는지가 나타난다. 결론부터 말하자면 잘라온 슬라이스에서 변형이 이뤄지면 기존의 배열도 변화한다. 이는 슬라이스가 복사된 새로운 데이터를 만드는게 아닌, 기존 배열에 특정 부분을 가리키는 포인터로 동작하기 때문이다.
+
+```go
+s = s[2:4]
+```
+![](https://go.dev/blog/slices-intro/slice-2.png)
+
+때문에 기존의 다른 데이터 타입의 경우, 
 
 ## 슬라이스가 빈 경우를 확인하는 방법
 
@@ -273,12 +304,269 @@ for name, age := range ages{
 *************/
 ```
 
+## struct
 
+go에는 동일하거나 다른 유형의 필드가 포함된 구조체 유형이 존재한다.  구조체는 기본적으로 논리적 의미 또는 구성을 갖는 명명된 필드의 모음이며, 각 필드에는 특정 유형이 있다.
 
+일반적으로 구조체 유형은 사용자 정의 데이터 유형을 나타낸다. 이미 내장된 데이터 유형으로 불충분한 경우, 구조체라는 사용자 정의 데이터 유형을 정의하여 사용할 수 있다.
 
+이해를 돕기 위해, 게시할 블로그 게시물이 있다고 가정해보자.
 
+```go
+type blogPost struct {
+	author 	string 	// 필드 1
+	title	string 	// 필드 2
+	postId	int		// 필드 3
+}
+```
 
+구조체 정의의 예시이다. blogPost라는 구조체 내에 3개의 다른 필드를 정의하였다.
 
+이렇게 정의된 구조체는 다음과 같이 사용될 수 있다.
 
+```go
+package main
 
+import "fmt"
 
+type blogPost struct {
+	author string
+	title  string
+	postId int
+}
+
+func main() {
+	var b blogPost // 구조체 초기화, 별도의 값을 지정하지 않는다면 zero value
+
+	fmt.Println(b) // zero value 출력
+	b = blogPost{
+		author: "youngmki",
+		title:  "Go programming basic",
+		postId: 12345, // }를 다음 줄로 분리한다면 맨 마지막에도 컴마(,)를 표시해줘야 한다.
+	}
+	fmt.Println(b)
+}
+```
+[코드 실행](https://play.golang.org/p/42qWonnag6I)
+
+new 키워드를 사용하여 b에 포인터를 담는다면 다음과 같이 코드를 작성할 수 있다.
+
+```go
+package main
+
+import "fmt"
+
+type blogPost struct {
+	author string
+	title  string
+	postId int
+}
+
+func main() {
+	b := new(blogPost) // b := &(blogPost{})로 작성할 수도 있다.
+
+	fmt.Println(b) // zero value 출력
+	b = &blogPost{
+		author: "youngmki",
+		title:  "Go programming basic",
+		postId: 12345, // }를 다음 줄로 분리한다면 맨 마지막에도 컴마(,)를 표시해줘야 한다.
+	}
+	fmt.Println(b)
+}
+```
+
+`=` 기호를 통해 접근할 수도 있지만, dot `.`을 통해서도 접근할 수 있다.
+
+```go
+package main
+
+import "fmt"
+
+type blogPost struct {
+  author  string
+  title   string
+  postId  int  
+}
+
+func main() {
+        var b blogPost // blogPost 타입에 해당하는 b를 생성한다.
+        b.author = "youngmki"
+        b.title = "Go programming basic"
+        b.postId = 12345
+
+        fmt.Println(b)  
+
+        b.author = "Chinedu" 
+        fmt.Println("Updated Author's name is: ", b.author)           
+}
+```
+
+new 키워드를 통해 선언된 구조체 포인터 변수도 dot `.`을 통해 해당 구조체 변수에 바로 접근할 수 있다.
+
+```go
+	b.postId = 13333
+```
+
+```go
+package main
+
+import "fmt"
+
+type blogPost struct {
+  author  string
+  title   string
+  postId  int  
+}
+
+func main() {
+        b := blogPost{"youngmki", "Go programming basic", 12345}
+        fmt.Println(b)        
+}
+```
+
+다른 타입과 마찬가지로 리터럴로 간단하게 표현할 수도 있다.
+
+만약 스코프 내에서만 유효한 구조체를 만들고 싶다면 다음과 같은 문법을 사용한다.
+
+```go
+package main
+
+import "fmt"
+
+type blogPost struct {
+  author  string
+  title   string
+  postId  int  
+}
+
+func main() {
+
+        // main 함수 내에서 구조체 선언 및 초기화
+        b := struct {
+          author  string
+          title   string
+          postId  int  
+         }{
+          author: "youngmki",
+          title:"Go programming basic",
+          postId: 12345,
+        }
+
+        fmt.Println(b)           
+}
+```
+
+## 중첩된 struct 필드
+
+다음과 같은 구조체 두개가 있다고 하자
+
+```go
+type Circle struct {
+	X, Y, Radius int
+}
+
+type Wheel struct {
+	X, Y, Radius, Spokes int
+}
+```
+
+구조체의 필드에는 X, Y, Radius가 중복된다.
+
+해당 경우에는 구조체 `Wheel`을 아래와 같이 사용할 수 있을 것이다. 
+```go
+var w Wheel
+w.X = 8
+w.Y = 8
+w.Radius = 5
+w.Spokes = 20
+```
+
+구조체에서 유사성과 반복성을 발견한다면, 다음과 같이 공통적인 부분을 고려하는 것이 편리할 수 있다.
+
+```go
+type Point struct {
+	X, Y int
+}
+
+type Circle struct {
+	Center 	Point
+	Radius 	int
+}
+
+type Wheel struct {
+	Cir	Circle
+	Spokes 	int
+}
+```
+
+이렇게 구조체를 작성하게 된다면, 훨씬 명확하게 필드에 접근이 가능하지만, 깊게 위치한 필드에 접근이 번거로워진다는 단점이 있다.
+```go
+var w Wheel
+w.Cir.Center.X = 8
+w.Cir.Center.Y = 8
+w.Cir.Radius = 5
+w.Spokes = 20
+
+// w.X << 직접적인 접근은 불가능해진다.
+```
+[실행 링크](https://play.golang.org/p/8mmlw7mMZPZ)
+
+## 익명 필드로 구성된 구조체
+
+직전의 중첩된 구조체를 다음과 같이 작성할 수도 있다.
+```go
+type Point struct {
+	X, Y int
+}
+
+type Circle struct {
+	Point
+	Radius 	int
+}
+
+type Wheel struct {
+	Circle
+	Spokes 	int
+}
+```
+
+이는 다음과 같이 초기화 된다.
+```go
+w := Wheel{Circle{Point{8, 8}, 5}, 20}
+
+or
+
+w := Wheel {
+	Circle: Circle{
+		Point:	Point{X: 8, Y: 8}, 
+		Radius:	5,
+		},
+	Spokes: 20,
+}
+```
+
+이처럼 중첩된 구조체를 내부에서부터 하나씩 채워나감으로써 익명 필드로 구성된 구조체를 사용할 수 있다.
+
+익명 함수로 작성된 경우, Wheel의 타입을 갖는 w가 곧바로 X에 접근이 가능하다.
+
+```go
+w = Wheel{
+		Circle: Circle{
+			Point:  Point{X: 8, Y: 8},
+			Radius: 5,
+		},
+		Spokes: 20,
+	}
+	
+	w.X = 20 // w.Cir
+```
+주의해야 할 점은, 익명 필드의 경우 한 구조체 내에 동일한 타입이 두번 이상 등장할 수 없다는 것이다. 익명 필드는 타입을 기준으로 인식이 되기 때문에, 서로 다른 필드의 타입 중복은 모호할 수 밖에 없기 때문이다.
+
+```go
+type Wheel struct {
+	Circle
+	Circle		// ERROR
+	Spokes 	int
+}
+```
+[실행 링크](https://play.golang.org/p/NgGZb8BSr8D)
