@@ -7,8 +7,10 @@ import (
 
 func main () {
 	start := time.Now()
+
+	i := 0
 	func() {
-		for i:=0; i < 1000; i++ {
+		for ; i < 1000; i++ {
 			fmt.Println(i)
 		} 
 	}()

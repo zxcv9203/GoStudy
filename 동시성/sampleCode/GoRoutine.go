@@ -21,6 +21,5 @@ func main() {
 
 	elapsedTime := time.Since(start)
 	fmt.Println("총 실행 시간: " + elapsedTime.String())
-
 	time.Sleep(time.Second)
 }
