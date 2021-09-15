@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	runtime.GOMAXPROCS(4)
+	runtime.GOMAXPROCS(3)
 	start := time.Now()
 	go func() {
 		for i:=0; i < 3; i++ {
